@@ -8,7 +8,7 @@ class ContactController extends Controller
 {
     public function showContact()
     {
-        return view('contact');
+        return view('pages.contact');
     }
 
     public function submitContact(Request $request)

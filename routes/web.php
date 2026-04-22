@@ -18,7 +18,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/contact', [ContactController::class, 'showContact'])->name('contact');
-Route::post('/contact', [ContactController::class, 'submitContact'])->name('contact.submit');
+Route::post('/contact', [ContactController::class, 'Contact'])->name('contact.submit');
 
 Route::get('/api/user', function () {
     if (Auth::check()) {
