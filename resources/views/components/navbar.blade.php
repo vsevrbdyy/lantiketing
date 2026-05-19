@@ -1,11 +1,11 @@
 <div class="w-full px-4 py-2 border-b-8 border-gray-200 shadow-xl">
-    <nav class="flex justify-start gap-32 items-center mx-auto max-w-7xl">
+    <nav class="flex justify-between">
 
         <div class="bg-transparent">
             <img src="{{ asset('images/logo.svg') }}" alt="Lan-Jalan Logo">
         </div>
 
-        <ul class="font-bold flex gap-8 items-center list-none m-0 p-0">
+        <ul class="font-bold flex gap-24 items-center list-none m-0 p-0" style="padding-right: 535px;">
 
             <li class="m-0">
                 <a href="/" class="no-underline text-black hover:text-blue-600 transition-colors">Home</a>
@@ -15,7 +15,7 @@
                 <button
                     @click="open = !open"
                     class="inline-flex items-center gap-1 font-bold cursor-pointer bg-transparent border-none p-0 text-black hover:text-blue-600 transition-colors"
-                >Online Ticket
+                >Our Services
                     <svg :class="open ? 'rotate-180' : ''" class="w-4 h-4 text-gray-400 transition-transform" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" />
                     </svg>
@@ -31,36 +31,9 @@
                     class="absolute mt-2 w-56 origin-top-left rounded-md bg-gray-800 shadow-lg z-50"
                 >
                     <div class="py-1">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors no-underline">Tiket Masuk</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors no-underline">Tiket Wahana</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors no-underline">Paket Bundling</a>
-                    </div>
-                </div>
-            </li>
-
-            <li class="m-0 relative" x-data="{ open: false }" @click.outside="open = false">
-                <button
-                    @click="open = !open"
-                    class="inline-flex items-center gap-1 font-bold cursor-pointer bg-transparent border-none p-0 text-black hover:text-blue-600 transition-colors"
-                >Booking Tiket
-                    <svg :class="open ? 'rotate-180' : ''" class="w-4 h-4 text-gray-400 transition-transform" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" />
-                    </svg>
-                </button>
-                <div
-                    x-show="open"
-                    x-transition:enter="transition ease-out duration-100"
-                    x-transition:enter-start="opacity-0 scale-95"
-                    x-transition:enter-end="opacity-100 scale-100"
-                    x-transition:leave="transition ease-in duration-75"
-                    x-transition:leave-start="opacity-100 scale-100"
-                    x-transition:leave-end="opacity-0 scale-95"
-                    class="absolute mt-2 w-56 origin-top-left rounded-md bg-gray-800 shadow-lg z-50"
-                >
-                    <div class="py-1">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors no-underline">Hotel</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors no-underline">Transportasi</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors no-underline">Paket Wisata</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors no-underline">Experience Ticket</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors no-underline">Destination Ticket</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors no-underline">Day Tour Package</a>
                     </div>
                 </div>
             </li>
