@@ -1,69 +1,71 @@
-<div class="w-full px-4 py-2 border-b-8 border-gray-200 shadow-xl">
-    <nav class="flex justify-between">
+<div class="w-full">
+    <nav class="max-w-450 mx-auto bg-[#aab5b6] rounded-bl-[50px] rounded-br-[50px] px-8 py-5 shadow-md">
+       <div class="flex items-center justify-between">
 
-        <div class="bg-transparent">
-            <img src="{{ asset('images/logo.svg') }}" alt="Lan-Jalan Logo">
-        </div>
+            <div class="bg-transparent">
+                <img src="{{ asset('images/logo.svg') }}" alt="Lan-Jalan Logo">
+            </div>
 
-        <ul class="font-bold flex gap-24 items-center list-none m-0 p-0" style="padding-right: 535px;">
+            <ul class="flex items-center gap-10 text-base font-semibold text-gray-800">
+                
+                <li>
+                    <a href="/" class="hover:text-blue-600 transition-colors">Home</a>
+                </li>
 
-            <li class="m-0">
-                <a href="/" class="no-underline text-black hover:text-blue-600 transition-colors">Home</a>
-            </li>
-
-            <li class="m-0" x-data="{ open: false }" @click.outside="open = false">
-                <button
-                    @click="open = !open"
-                    class="inline-flex items-center gap-1 font-bold cursor-pointer bg-transparent border-none p-0 text-black hover:text-blue-600 transition-colors"
-                >Our Services
-                    <svg :class="open ? 'rotate-180' : ''" class="w-4 h-4 text-gray-400 transition-transform" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" />
-                    </svg>
-                </button>
-                <div
-                    x-show="open"
-                    x-transition:enter="transition ease-out duration-100"
-                    x-transition:enter-start="opacity-0 scale-95"
-                    x-transition:enter-end="opacity-100 scale-100"
-                    x-transition:leave="transition ease-in duration-75"
-                    x-transition:leave-start="opacity-100 scale-100"
-                    x-transition:leave-end="opacity-0 scale-95"
-                    class="absolute mt-2 w-56 origin-top-left rounded-md bg-gray-800 shadow-lg z-50"
-                >
-                    <div class="py-1">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors no-underline">Experience Ticket</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors no-underline">Destination Ticket</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors no-underline">Day Tour Package</a>
-                    </div>
-                </div>
-            </li>
-
-            <li class="m-0">
-                <a href="/contact" class="no-underline text-black hover:text-blue-600 transition-colors">Contact us</a>
-            </li>
-
-            @if(Auth::check())
-                <li class="m-0 text-black">{{ Auth::user()->name }}</li>
-                <li class="m-0">
-                    <button
-                        onclick="showLogoutPopup()"
-                        class="px-5 py-2 rounded-lg border border-gray-300 font-medium text-black bg-transparent cursor-pointer hover:border-blue-600 hover:text-blue-600 transition-colors"
-                    >
-                        Logout
+                <li class="relative" x-data="{ open: false }" @click.outside="open = false">
+                    <button 
+                        @click="open = !open"
+                        class="inline-flex items-center gap-1 hover:text-blue-600 transition-colors">
+                        Our Services
+                        <svg :class="open ? 'rotate-180' : ''" 
+                            class="w-4 h-4 transition-transform" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            stroke-width="3" 
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
                     </button>
-                </li>
-            @else
-                <li class="m-0">
-                    <a href="{{ route('login') }}" class="no-underline text-black hover:text-blue-600 transition-colors">Login</a>
-                </li>
-                <li class="m-0">
-                    <a href="{{ route('register') }}" class="px-5 py-2 rounded-lg border-2 border-black font-medium text-black no-underline hover:border-blue-600 hover:text-blue-600 transition-colors">
-                        Sign Up
-                    </a>
-                </li>
-            @endif
 
-        </ul>
+                    <div 
+                        x-show="open"
+                        x-transition
+                        class="absolute left-0 mt-3 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50">
+                        <a href="#" class="block px-6 py-3 hover:bg-gray-50 text-sm">Experience Ticket</a>
+                        <a href="#" class="block px-6 py-3 hover:bg-gray-50 text-sm">Destination Ticket</a>
+                        <a href="#" class="block px-6 py-3 hover:bg-gray-50 text-sm">Day Tour Package</a>
+                    </div>
+                </li>
+
+                <li>
+                    <a href="/contact" class="hover:text-blue-600 transition-colors">Contact us</a>
+                </li>
+
+                @if(Auth::check())
+                    <li class="font-medium">{{ Auth::user()->name }}</li>
+                    <li>
+                        <button onclick="showLogoutPopup()" 
+                                class="px-6 py-2 rounded-full border border-gray-300 hover:border-red-500 hover:text-red-600 transition-colors">
+                            Logout
+                        </button>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{ route('login') }}" 
+                        class="hover:text-blue-600 transition-colors">
+                            Login
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('register') }}" 
+                        class="px-6 py-2.5 rounded-full border-2 border-gray-900 font-semibold hover:bg-gray-900 hover:text-white transition-all">
+                            Sign up
+                        </a>
+                    </li>
+                @endif
+
+            </ul>
+        </div>
     </nav>
 </div>
 
