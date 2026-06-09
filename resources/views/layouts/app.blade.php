@@ -12,7 +12,7 @@
 </head>
 <body class="bg-linear-to-r from-[#EAF1EF] to-[#FFFFFF] min-h-screen">
  
-    <x-navbar />
+    <x-navbar/>
     
     <div class="max-w-459.5 mx-auto px-4 mt-5">
 
@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <div class="w-full py-16 px-4 bg-white">
+    <div class="w-full py-16 px-4">
         <div class="max-w-300 mx-auto flex flex-col gap-16">
 
             <div class="flex items-center gap-12">
@@ -184,10 +184,8 @@
     </div>
 
     <div class="max-w-459.5 mx-auto px-52">
-        <section 
-            id="our-services"
-            class="relative overflow-hidden rounded-t-[40px]"
-            style="background-color: #1c2b22;"
+        <div class="relative overflow-hidden rounded-t-[40px]"
+             style="background-color: #1c2b22;"
             >
             <div
                 class="absolute inset-0 bg-cover bg-center"
@@ -239,7 +237,7 @@
                     </div>
 
                     {{-- Panel Area --}}
-                    <div class="flex-1 bg-white rounded-tr-2xl rounded-br-2xl rounded-bl-none p-6 min-h-[280px]">
+                    <div class="flex-1 bg-white rounded-tr-2xl rounded-br-2xl rounded-bl-none p-6 min-h-70">
 
                         {{-- Panel: Day Tours --}}
                         <div id="srv-panel-day" class="srv-panel">
@@ -369,8 +367,103 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
+    
+    <div class="py-20 overflow-hidden pl-6 md:pl-16 lg:pl-80 mx-6 md:mx-12 lg:mx-60.5 bg-white pb-32">
+
+        <div class="flex items-center gap-10">
+
+            {{-- ── Teks: lebar tetap, tidak menyusut ── --}}
+            <div class="shrink-0 w-95 lg:w-115 space-y-5">
+
+                <div>
+                    <h2 class="text-[24px] font-bold text-gray-800 mb-1">About us</h2>
+                    <p class="text-[20px] font-semibold text-gray-800">
+                        HAS BEEN ESTABLISHED SINCE 2026
+                    </p>
+                </div>
+
+                <div class="text-[15px] lg:text-[16px] text-gray-700 leading-relaxed space-y-4">
+                    <p>
+                        We are students of Computer Engineering, Faculty of Engineering and Planning,
+                        Warmadewa University who are studying website programming.
+                    </p>
+                    <p>
+                        This project was born from our journey in learning website programming.
+                        With all the processes, challenges and exploration that we carry out,
+                        we try to provide the best in building a ticketing platform that can be
+                        used easily and comfortably.
+                    </p>
+                    <p>
+                        We also raise the concepts of
+                        <span class="font-semibold">Sapta Pesona</span> and
+                        <span class="font-semibold">Tri Hita Karana</span>, because we believe
+                        good technology is one that remains in harmony with cultural values,
+                        the environment and relationships between humans.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="flex-1 overflow-hidden h-65 md:h-90 lg:h-138.75">
+
+                @php
+                    $images = [
+                        asset('images/Team-1.jpg'),
+                        asset('images/Team-2.jpg'),
+                        asset('images/Team-3.jpg'),
+                        asset('images/Team-4.jpg'),
+                        asset('images/Team-5.jpg'),
+                        asset('images/Team-6.jpg'),
+                        asset('images/Team-7.jpg'),
+                    ];
+                    $allImages = array_merge($images, $images);
+                @endphp
+
+                <div class="about-marquee flex gap-4 h-full" style="width: max-content;">
+                    @foreach ($allImages as $img)
+                        <div class="shrink-0 h-full w-55 lg:w-90 rounded-4xl lg:rounded-[2.5rem] overflow-hidden shadow-lg">
+                            <img
+                                src="{{ $img }}"
+                                alt="Tim Lan-jalan"
+                                class="w-full h-full object-cover"
+                                loading="lazy"
+                            >
+                        </div>
+                    @endforeach
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="mx-6 md:mx-12 lg:mx-60.5 bg-white pt-28 rounded-b-[69px] relative">
+        <img src="{{ asset('images/Partner-us-bg.svg') }}" 
+            alt="Background" class="w-full h-full object-cover"
+            class="items-end">
+        
+        <div class="absolute inset-0">
+        <img src="{{ asset('images/Asset-Pu.svg') }}"
+             alt="Asset Pu"
+             class="absolute bottom-0 right-10 md:right-20 lg:right-32 
+               h-[110%] md:h-[120%] w-auto object-contain items-end">
+        </div>
+
+        <div class="absolute bottom-52 left-4 md:left-36 z-10 space-y-3">
+            <p class="text-white text-sm font-semibold tracking-widest uppercase">
+                Partner With Us
+            </p>
+            <a href="#"
+            class="inline-flex items-center gap-3 bg-white/90 text-gray-800
+                    text-sm font-medium px-5 py-2.5 rounded-full hover:bg-white transition">
+                Registration Now <span>→</span>
+            </a>
+        </div>
+    </div>
+
+    <x-footer/>
 
     {{-- SERVICE TAB SWITCHING SCRIPT --}}
     <style>
@@ -395,6 +488,16 @@
         }
         .srv-panel:not(.hidden) {
             animation: srvFadeIn 0.25s ease;
+        }
+    </style>
+
+    <style>
+        @keyframes aboutMarquee {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .about-marquee {
+            animation: aboutMarquee 30s linear infinite;
         }
     </style>
 
