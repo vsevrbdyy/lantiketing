@@ -1,12 +1,14 @@
 <div class="w-full">
-    <nav class="max-w-450 mx-auto bg-[#aab5b6] rounded-bl-[50px] rounded-br-[50px] px-8 py-5 shadow-md">
-       <div class="flex items-center justify-between">
+    <nav class="mx-auto bg-[#AAB5B7]/20 px-8 py-5 shadow-md">
+       <div class="flex items-center justify-between max-w-430 mx-auto">
 
             <div class="bg-transparent">
-                <img src="{{ asset('images/logo.svg') }}" alt="Lan-Jalan Logo">
+                <img src="{{ asset('images/logo.svg') }}" 
+                     alt="Lan-Jalan Logo"
+                     class="invert">
             </div>
 
-            <ul class="flex items-center gap-10 text-base font-semibold text-gray-800">
+            <ul class="flex items-center gap-10 text-base font-semibold text-white">
                 
                 <li>
                     <a href="{{ route('home') }}" class="hover:text-blue-600 transition-colors">Home</a>
@@ -58,7 +60,7 @@
                     </li>
                     <li>
                         <a href="{{ route('register') }}" 
-                        class="px-6 py-2.5 rounded-full border-2 border-gray-900 font-semibold hover:bg-gray-900 hover:text-white transition-all">
+                        class="px-6 py-2.5 rounded-full border-2 border-white font-semibold hover:bg-white hover:text-gray-900 transition-all">
                             Sign up
                         </a>
                     </li>

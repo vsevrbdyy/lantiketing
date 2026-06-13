@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - LAN-JALAN</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="Lan-Jalan Ticket Online - Booking Tiket Wisata Bali">
+    <title>lan-jalan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-white font-sans">
+
+<body class="bg-linear-to-r from-[#EAF1EF] to-[#FFFFFF] min-h-screen">
     <div class="container mx-auto flex justify-center items-center min-h-screen px-4 py-10">
         <div class="bg-white rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.1)] border border-gray-200 p-10 w-full max-w-4xl">
 
