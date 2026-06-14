@@ -1,0 +1,98 @@
+<?php
+
+namespace App\Filament\Resources;
+
+use App\Filament\Resources\DestinasiResource\Pages;
+use App\Models\Destinasi;
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
+
+class DestinasiResource extends Resource
+{
+    protected static ?string $model = Destinasi::class;
+
+    protected static ?string $navigationIcon = 'heroicon-o-map-pin';
+    
+    protected static ?string $navigationLabel = 'Destinasi';
+    
+    protected static ?string $pluralLabel = 'Destinasi';
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Forms\Components\TextInput::make('nama_destinasi')
+                    ->required()
+                    ->maxLength(255)
+                    ->label('Nama Destinasi'),
+                Forms\Components\RichEditor::make('deskripsi')
+                    ->label('Deskripsi')
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('harga_tiket')
+                    ->required()
+                    ->numeric()
+                    ->prefix('Rp')
+                    ->label('Harga Tiket'),
+                Forms\Components\TextInput::make('lokasi')
+                    ->maxLength(255)
+                    ->label('Lokasi'),
+                Forms\Components\FileUpload::make('gambar')
+                    ->image()
+                    ->directory('destinasi')
+                    ->label('Gambar'),
+            ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                Tables\Columns\TextColumn::make('nama_destinasi')
+                    ->searchable()
+                    ->sortable()
+                    ->label('Nama Destinasi'),
+                Tables\Columns\TextColumn::make('harga_tiket')
+                    ->money('IDR')
+                    ->label('Harga'),
+                Tables\Columns\TextColumn::make('lokasi')
+                    ->searchable()
+                    ->label('Lokasi'),
+                Tables\Columns\ImageColumn::make('gambar')
+                    ->label('Gambar'),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->label('Dibuat'),
+            ])
+            ->filters([
+                Tables\Filters\SelectFilter::make('lokasi')
+                    ->label('Filter Lokasi'),
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListDestinasis::route('/'),
+            'create' => Pages\CreateDestinasi::route('/create'),
+            'edit' => Pages\EditDestinasi::route('/{record}/edit'),
+        ];
+    }
+}

@@ -42,3 +42,8 @@ Route::get('/api/user', function () {
     }
     return response()->json(['user' => null]);
 });
+
+Route::post('/admin/logout', function () {
+    Auth::logout();
+    return redirect('/');
+})->name('filament.admin.auth.logout');

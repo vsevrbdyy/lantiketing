@@ -44,6 +44,13 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($request->only('email', 'password'))) {
+            $request->session()->regenerate();
+            
+            // Cek role user
+            if (in_array(Auth::user()->role, ['super_admin', 'admin'])) {
+                return redirect()->intended('/admin');
+            }
+            
             return redirect()->route('home');
         }
 
