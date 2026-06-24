@@ -8,6 +8,7 @@ use App\Http\Controllers\DTPController;
 use App\Http\Controllers\AppController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PageController;
 
 Route::get('/', function () {
     return view('dashboard');
@@ -35,6 +36,10 @@ Route::post('/daytourpack', [DTPController::class, 'submitDayTourPack'])->name('
 
 Route::get('/app', [AppController::class, 'showApp'])->name('app');
 Route::post('/app', [AppController::class, 'submitApp'])->name('app');
+
+Route::get('/destination', [PageController::class, 'destination'])->name('destination');
+Route::get('/experience', [PageController::class, 'experience'])->name('experience');
+Route::get('/daytour', [PageController::class, 'daytour'])->name('daytour');
 
 Route::get('/api/user', function () {
     if (Auth::check()) {

@@ -33,9 +33,9 @@
                         x-show="open"
                         x-transition
                         class="absolute left-0 mt-3 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50">
-                        <a href="{{ route('experience') }}" class="block px-6 py-3 hover:bg-gray-50 text-sm">Experience Ticket</a>
-                        <a href="{{ route('destination') }}" class="block px-6 py-3 hover:bg-gray-50 text-sm">Destination Ticket</a>
-                        <a href="{{ route('daytourpack') }}" class="block px-6 py-3 hover:bg-gray-50 text-sm">Day Tour Package</a>
+                        <a href="{{ route('experience') }}" class="block px-6 py-3 hover:bg-gray-50 text-black text-sm">Experience Ticket</a>
+                        <a href="{{ route('destination') }}" class="block px-6 py-3 hover:bg-gray-50 text-black text-sm">Destination Ticket</a>
+                        <a href="{{ route('daytourpack') }}" class="block px-6 py-3 hover:bg-gray-50 text-black text-sm">Day Tour Package</a>
                     </div>
                 </li>
 
