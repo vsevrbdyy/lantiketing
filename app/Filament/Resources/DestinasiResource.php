@@ -20,6 +20,8 @@ class DestinasiResource extends Resource
     
     protected static ?string $pluralLabel = 'Destinasi';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     public static function form(Form $form): Form
     {
         return $form

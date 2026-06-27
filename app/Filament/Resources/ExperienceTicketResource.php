@@ -16,8 +16,7 @@ class ExperienceTicketResource extends Resource
     protected static ?string $model = ExperienceTicket::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'Tiket Wahana';
-    protected static ?string $label = 'Experience Ticket';
+    protected static ?string $navigationLabel = 'Experience Ticket'; 
 
     public static function form(Form $form): Form
     {

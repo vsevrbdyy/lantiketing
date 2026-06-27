@@ -20,6 +20,8 @@ class KontakResource extends Resource
     
     protected static ?string $pluralLabel = 'Kontak';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     public static function form(Form $form): Form
     {
         return $form

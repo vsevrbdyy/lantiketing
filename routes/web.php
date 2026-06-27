@@ -8,7 +8,6 @@ use App\Http\Controllers\DTPController;
 use App\Http\Controllers\AppController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PageController;
 
 Route::get('/', function () {
     return view('dashboard');
@@ -25,21 +24,15 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/contact', [ContactController::class, 'showContact'])->name('contact');
 Route::post('/contact', [ContactController::class, 'Contact'])->name('contact.submit');
 
+// Destination — filter via ?category=
 Route::get('/destination', [DestinationController::class, 'showDestination'])->name('destination');
-Route::post('/destination', [DestinationController::class, 'submitDestination'])->name('destination.submit');
 
+// Experience & Day Tour (belum terhubung ke DB — tetap seperti semula)
 Route::get('/experience', [ExperienceController::class, 'showExperience'])->name('experience');
-Route::post('/experience', [ExperienceController::class, 'submitExperience'])->name('experience.submit');
-
 Route::get('/daytourpack', [DTPController::class, 'showDayTourPack'])->name('daytourpack');
-Route::post('/daytourpack', [DTPController::class, 'submitDayTourPack'])->name('daytourpack.submit');
 
 Route::get('/app', [AppController::class, 'showApp'])->name('app');
-Route::post('/app', [AppController::class, 'submitApp'])->name('app');
-
-Route::get('/destination', [PageController::class, 'destination'])->name('destination');
-Route::get('/experience', [PageController::class, 'experience'])->name('experience');
-Route::get('/daytour', [PageController::class, 'daytour'])->name('daytour');
+Route::post('/app', [AppController::class, 'submitApp'])->name('app.submit');
 
 Route::get('/api/user', function () {
     if (Auth::check()) {

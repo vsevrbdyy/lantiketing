@@ -20,8 +20,7 @@ class DestinationTicketResource extends Resource
     protected static ?string $model = DestinationTicket::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'Tiket Wisata';
-    protected static ?string $label = 'Destination Ticket';
+    protected static ?string $navigationLabel = 'Destination Ticket';
 
     public static function form(Form $form): Form
     {

@@ -29,7 +29,6 @@
         {{-- Konten di depan gambar --}}
         <div class="relative z-10">
             <x-navbartrans />
-            {{-- Konten lain bisa ditambahkan di sini --}}
         </div>
 
         <div class="relative ml-24 mt-80">
@@ -60,6 +59,7 @@
 
         </div>
 
+        {{-- ===================== FILTER BAR ===================== --}}
         <div class="relative flex items-center ml-[89px] mt-32 font-extralight text-2xl">
             <ul>
                 <li class="text-white">Filter</li>
@@ -67,27 +67,50 @@
 
             <div class="w-[2px] h-12 bg-white ml-3.5"></div>
 
-            {{-- Wrapper overflow-hidden sebagai "pintu" --}}
+            {{-- Wrapper overflow-hidden sebagai "pintu" animasi slide --}}
             <div class="overflow-hidden ml-3.5">
                 <div id="filterBox"
                     class="-translate-x-full transition-all duration-700 ease-out text-white flex gap-4">
 
-                    <div class="rounded-2xl border border-white pl-3 pr-3 pt-0.3 text-[20px]">
-                        <button>Beach</button>
-                    </div>
-                    <div class="rounded-2xl border border-white pl-3 pr-3 pt-0.3 text-[20px]">
-                        <button>Rice Field</button>
-                    </div>
-                    <div class="rounded-2xl border border-white pl-3 pr-3 pt-0.3 text-[20px]">
-                        <button>Sunset</button>
-                    </div>
-                    <div class="rounded-2xl border border-white pl-3 pr-3 pt-0.3 text-[20px]">
-                        <button>Temple</button>
-                    </div>
+                    {{-- ALL --}}
+                    <a href="{{ route('destination') }}"
+                       class="rounded-2xl border border-white pl-3 pr-3 pt-0.3 text-[20px] transition-colors
+                              {{ !$category ? 'bg-[#FFD04D] text-[#1A2A44] border-[#FFD04D] font-semibold' : 'hover:bg-white/20' }}">
+                        All
+                    </a>
+
+                    {{-- BEACH --}}
+                    <a href="{{ route('destination', ['category' => 'beach']) }}"
+                       class="rounded-2xl border border-white pl-3 pr-3 pt-0.3 text-[20px] transition-colors
+                              {{ $category === 'beach' ? 'bg-[#FFD04D] text-[#1A2A44] border-[#FFD04D] font-semibold' : 'hover:bg-white/20' }}">
+                        Beach
+                    </a>
+
+                    {{-- RICE FIELD --}}
+                    <a href="{{ route('destination', ['category' => 'rice field']) }}"
+                       class="rounded-2xl border border-white pl-3 pr-3 pt-0.3 text-[20px] transition-colors
+                              {{ $category === 'rice field' ? 'bg-[#FFD04D] text-[#1A2A44] border-[#FFD04D] font-semibold' : 'hover:bg-white/20' }}">
+                        Rice Field
+                    </a>
+
+                    {{-- SUNSET --}}
+                    <a href="{{ route('destination', ['category' => 'sunset']) }}"
+                       class="rounded-2xl border border-white pl-3 pr-3 pt-0.3 text-[20px] transition-colors
+                              {{ $category === 'sunset' ? 'bg-[#FFD04D] text-[#1A2A44] border-[#FFD04D] font-semibold' : 'hover:bg-white/20' }}">
+                        Sunset
+                    </a>
+
+                    {{-- TEMPLE --}}
+                    <a href="{{ route('destination', ['category' => 'temple']) }}"
+                       class="rounded-2xl border border-white pl-3 pr-3 pt-0.3 text-[20px] transition-colors
+                              {{ $category === 'temple' ? 'bg-[#FFD04D] text-[#1A2A44] border-[#FFD04D] font-semibold' : 'hover:bg-white/20' }}">
+                        Temple
+                    </a>
 
                 </div>
             </div>
 
+            {{-- Search bar (dipertahankan seperti asli) --}}
             <div class="flex rounded-full border-white border ml-[900px] bg-[#D9D9D9]">
                 <button>
                     <span class="w-auto flex justify-end items-center text-[#1A2A44] p-2">
@@ -99,9 +122,11 @@
                        placeholder="Search...">
             </div>
         </div>
+        {{-- =================== END FILTER BAR =================== --}}
+
     </div>
 
-    {{-- LOOP TIKET DENGAN GRID 2 KOLOM --}}
+    {{-- ===================== GRID TIKET ===================== --}}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mx-12 md:mx-20 lg:mx-32 xl:mx-48 mt-10">
         @forelse($tickets as $ticket)
             <div class="shadow-lg rounded-[50px] bg-white overflow-hidden flex flex-col">
@@ -155,25 +180,19 @@
             </div>
         @empty
             <div class="col-span-2 text-center py-20 text-gray-500 text-xl">
-                Belum ada tiket destinasi yang tersedia.
+                @if($category)
+                    Tidak ada tiket dengan kategori <strong>{{ ucwords($category) }}</strong>.
+                @else
+                    Belum ada tiket destinasi yang tersedia.
+                @endif
             </div>
         @endforelse
     </div>
+    {{-- =================== END GRID TIKET =================== --}}
 
-    {{-- Pagination (tetap seperti asli, tapi nanti bisa diganti dengan links()) --}}
+    {{-- Pagination — tetap mempertahankan query string kategori --}}
     <div class="flex items-center justify-center pt-11 gap-2">
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-300 text-gray-600 hover:bg-gray-200 transition">
-            &#8249;
-        </button>
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-white border border-gray-300 font-semibold">
-            1
-        </button>
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-300 text-gray-600 hover:bg-gray-200 transition">
-            2
-        </button>
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-300 text-gray-600 hover:bg-gray-200 transition">
-            &#8250;
-        </button>
+        {{ $tickets->appends(request()->query())->links() }}
     </div>
 
     <x-footer />

@@ -15,9 +15,8 @@ class DayTourPackageResource extends Resource
 {
     protected static ?string $model = DayTourPackage::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'Paket Wisata';
-    protected static ?string $label = 'Day Tour Package';
+   protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Day Tour Packages'; 
 
     public static function form(Form $form): Form
     {
