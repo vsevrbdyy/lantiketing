@@ -18,4 +18,13 @@ class DestinationController extends Controller
 
         return view('pages.destination', compact('tickets', 'category'));
     }
+
+    public function show($slug)
+    {
+        $ticket = DestinationTicket::where('slug', $slug)
+            ->where('is_active', true)
+            ->firstOrFail();
+
+        return view('pages.destination-detail', compact('ticket'));
+    }
 }

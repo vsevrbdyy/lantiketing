@@ -14,6 +14,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Toggle;
+use Illuminate\Support\Str;
 
 class DestinationTicketResource extends Resource
 {
@@ -27,9 +28,15 @@ class DestinationTicketResource extends Resource
         return $form
             ->schema([
                 TextInput::make('title')
-                    ->required()
-                    ->maxLength(255)
-                    ->label('Nama Destinasi'),
+                ->required()
+                ->reactive()
+                ->afterStateUpdated(function ($state, callable $set) {
+                    $set('slug', Str::slug($state));
+                }),
+
+                TextInput::make('slug')
+                ->required()
+                ->unique(ignoreRecord: true),
 
                 TextInput::make('location')
                     ->required()
@@ -50,7 +57,6 @@ class DestinationTicketResource extends Resource
                     ->mutateDehydratedStateUsing(fn ($state) => (int) str_replace(['.', ','], ['', '.'], $state ?? '0')),
 
                 FileUpload::make('image')
-                    ->image()
                     ->directory('tickets')
                     ->nullable()
                     ->label('Gambar'),

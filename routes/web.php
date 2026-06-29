@@ -26,10 +26,15 @@ Route::post('/contact', [ContactController::class, 'Contact'])->name('contact.su
 
 // Destination — filter via ?category=
 Route::get('/destination', [DestinationController::class, 'showDestination'])->name('destination');
+Route::get('/destinasi/{slug}', [DestinationController::class, 'show'])->name('destinasi.show');
 
-// Experience & Day Tour (belum terhubung ke DB — tetap seperti semula)
+// Experience
 Route::get('/experience', [ExperienceController::class, 'showExperience'])->name('experience');
+Route::get('/experience/{slug}', [ExperienceController::class, 'show'])->name('experience.show');
+
+// Day Tour Package
 Route::get('/daytourpack', [DTPController::class, 'showDayTourPack'])->name('daytourpack');
+Route::get('/daytourpack/{slug}', [DTPController::class, 'show'])->name('daytourpack.show');
 
 Route::get('/app', [AppController::class, 'showApp'])->name('app');
 Route::post('/app', [AppController::class, 'submitApp'])->name('app.submit');

@@ -127,57 +127,136 @@
     </div>
 
     {{-- ===================== GRID TIKET ===================== --}}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mx-12 md:mx-20 lg:mx-32 xl:mx-48 mt-10">
-        @forelse($tickets as $ticket)
-            <div class="shadow-lg rounded-[50px] bg-white overflow-hidden flex flex-col">
-                {{-- Gambar --}}
-                <div class="w-full">
-                    <img src="{{ $ticket->image ? asset('storage/' . $ticket->image) : asset('images/default.jpg') }}" 
-                         alt="{{ $ticket->title }}" 
-                         class="w-full h-64 object-cover">
+    <div class="mx-12 md:mx-20 lg:mx-32 xl:mx-48 mt-10">
+
+        @forelse($tickets as $index => $ticket)
+
+            {{-- ===== FEATURED CARD (tiket pertama di setiap halaman) ===== --}}
+            @if($index === 0)
+                <div class="shadow-lg rounded-[40px] bg-white overflow-hidden flex flex-row mb-10 min-h-[280px]">
+
+                    {{-- Gambar kiri --}}
+                    <div class="w-[38%] flex-shrink-0">
+                        <img src="{{ $ticket->image ? asset('storage/' . $ticket->image) : asset('images/default.jpg') }}"
+                             alt="{{ $ticket->title }}"
+                             class="w-full h-full object-cover">
+                    </div>
+
+                    {{-- Konten kanan --}}
+                    <div class="p-8 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h1 class="text-[38px] font-bold tracking-wide">{{ $ticket->title }}</h1>
+
+                            <div class="flex items-center my-2">
+                                <span class="text-black"><i class="material-icons text-base">location_on</i></span>
+                                <h2 class="italic font-bold ml-1 text-sm">{{ $ticket->location }}</h2>
+                            </div>
+
+                            <p class="text-justify italic text-sm leading-relaxed text-gray-700 mt-2 line-clamp-4">
+                                {{ $ticket->description }}
+                            </p>
+
+                            {{-- Tags --}}
+                            <ul class="flex flex-wrap gap-2 mt-4 opacity-30">
+                                @foreach($ticket->tags ?? [] as $tag)
+                                    <li class="border border-black px-3 py-0.5 rounded-3xl text-xs">{{ is_array($tag) ? ($tag['tag'] ?? '') : $tag }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+
+                        <div>
+                            <div class="w-full h-0.5 bg-black mt-4 mb-4"></div>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="text-xs">START FROM</p>
+                                    <p class="font-bold text-[#C89B3C] text-2xl">Rp {{ number_format($ticket->price, 0, ',', '.') }}</p>
+                                    <p class="text-xs">/Person</p>
+                                </div>
+                                <a href="{{ route('destinasi.show', $ticket->slug) }}"
+                                   class="px-8 py-2.5 rounded-full border-2 border-white bg-gray-400 font-semibold text-black hover:bg-[#C89B3C] hover:text-black transition-all flex items-center">
+                                    Visit
+                                    <i class="material-icons ml-2 text-black text-base">arrow_forward</i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                {{-- Konten --}}
-                <div class="p-6 flex-1 flex flex-col">
-                    <h1 class="text-[36px] font-bold">{{ $ticket->title }}</h1>
-
-                    <div class="flex my-2 ml-0">
-                        <span class="text-black">
-                            <i class="material-icons">location_on</i>
-                        </span>
-                        <h2 class="italic font-bold ml-1">{{ $ticket->location }}</h2>
+            {{-- ===== REGULAR GRID: buka wrapper grid sebelum kartu kedua ===== --}}
+            @elseif($index === 1)
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    {{-- Kartu kedua dan seterusnya masuk ke sini --}}
+                    <div class="shadow-lg rounded-[50px] bg-white overflow-hidden flex flex-col">
+                        <div class="w-full">
+                            <img src="{{ $ticket->image ? asset('storage/' . $ticket->image) : asset('images/default.jpg') }}"
+                                 alt="{{ $ticket->title }}"
+                                 class="w-full h-64 object-cover">
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <h1 class="text-[32px] font-bold">{{ $ticket->title }}</h1>
+                            <div class="flex items-center my-2">
+                                <span class="text-black"><i class="material-icons">location_on</i></span>
+                                <h2 class="italic font-bold ml-1">{{ $ticket->location }}</h2>
+                            </div>
+                            <p class="text-justify italic text-base leading-relaxed flex-1">{{ $ticket->description }}</p>
+                            <ul class="flex flex-wrap gap-2 my-6 opacity-30">
+                                @foreach($ticket->tags ?? [] as $tag)
+                                    <li class="border px-3 py-1 rounded-3xl text-sm">{{ is_array($tag) ? ($tag['tag'] ?? '') : $tag }}</li>
+                                @endforeach
+                            </ul>
+                            <div class="w-full h-0.5 bg-black mt-2"></div>
+                            <div class="flex justify-between items-center mt-4">
+                                <div>
+                                    <p class="text-sm">START FROM</p>
+                                    <p class="font-bold text-[#C89B3C] text-2xl">Rp {{ number_format($ticket->price, 0, ',', '.') }}</p>
+                                    <p class="text-sm">/Person</p>
+                                </div>
+                                <a href="{{ route('destinasi.show', $ticket->slug) }}"
+                                   class="px-8 py-2.5 rounded-full border-2 border-white bg-gray-400 font-semibold text-black hover:bg-[#C89B3C] hover:text-black transition-all flex items-center">
+                                    Visit
+                                    <i class="material-icons ml-2 text-black">arrow_forward</i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="text-justify flex-1">
-                        <h3 class="leading-relaxed italic text-base">
-                            {{ $ticket->description }}
-                        </h3>
+            {{-- ===== KARTU KE-3 DAN SETERUSNYA (tetap di dalam grid) ===== --}}
+            @else
+                    <div class="shadow-lg rounded-[50px] bg-white overflow-hidden flex flex-col">
+                        <div class="w-full">
+                            <img src="{{ $ticket->image ? asset('storage/' . $ticket->image) : asset('images/default.jpg') }}"
+                                 alt="{{ $ticket->title }}"
+                                 class="w-full h-64 object-cover">
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <h1 class="text-[32px] font-bold">{{ $ticket->title }}</h1>
+                            <div class="flex items-center my-2">
+                                <span class="text-black"><i class="material-icons">location_on</i></span>
+                                <h2 class="italic font-bold ml-1">{{ $ticket->location }}</h2>
+                            </div>
+                            <p class="text-justify italic text-base leading-relaxed flex-1">{{ $ticket->description }}</p>
+                            <ul class="flex flex-wrap gap-2 my-6 opacity-30">
+                                @foreach($ticket->tags ?? [] as $tag)
+                                    <li class="border px-3 py-1 rounded-3xl text-sm">{{ is_array($tag) ? ($tag['tag'] ?? '') : $tag }}</li>
+                                @endforeach
+                            </ul>
+                            <div class="w-full h-0.5 bg-black mt-2"></div>
+                            <div class="flex justify-between items-center mt-4">
+                                <div>
+                                    <p class="text-sm">START FROM</p>
+                                    <p class="font-bold text-[#C89B3C] text-2xl">Rp {{ number_format($ticket->price, 0, ',', '.') }}</p>
+                                    <p class="text-sm">/Person</p>
+                                </div>
+                                <a href="{{ route('destinasi.show', $ticket->slug) }}"
+                                   class="px-8 py-2.5 rounded-full border-2 border-white bg-gray-400 font-semibold text-black hover:bg-[#C89B3C] hover:text-black transition-all flex items-center">
+                                    Visit
+                                    <i class="material-icons ml-2 text-black">arrow_forward</i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
+            @endif
 
-                    {{-- Tags --}}
-                    <ul class="text-black flex flex-wrap ml-0 my-6 gap-2 opacity-30">
-                        @foreach($ticket->tags ?? [] as $tag)
-                            <li class="border px-3 py-1 rounded-3xl text-sm">{{ is_array($tag) ? ($tag['tag'] ?? '') : $tag }}</li>
-                        @endforeach
-                    </ul>
-
-                    <div class="w-full h-0.5 bg-black mt-2"></div>
-
-                    <div class="flex justify-between items-center mt-4">
-                        <ul class="text-black text-[30px]">
-                            <li class="text-sm">START FROM</li>
-                            <li class="font-bold text-[#C89B3C]">Rp {{ number_format($ticket->price, 0, ',', '.') }}</li>
-                            <li class="text-sm">/Person</li>
-                        </ul>
-
-                        <a href="{{ route('register') }}"
-                           class="px-8 py-2.5 rounded-full border-2 border-white bg-gray-400 font-semibold text-black hover:bg-[#C89B3C] hover:text-black transition-all flex items-center">
-                            Visit
-                            <i class="material-icons ml-2 text-black">arrow_forward</i>
-                        </a>
-                    </div>
-                </div>
-            </div>
         @empty
             <div class="col-span-2 text-center py-20 text-gray-500 text-xl">
                 @if($category)
@@ -187,6 +266,12 @@
                 @endif
             </div>
         @endforelse
+
+        {{-- Tutup div grid jika ada lebih dari 1 tiket --}}
+        @if($tickets->count() > 1)
+            </div>
+        @endif
+
     </div>
     {{-- =================== END GRID TIKET =================== --}}
 

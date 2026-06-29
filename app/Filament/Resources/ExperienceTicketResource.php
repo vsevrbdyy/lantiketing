@@ -3,20 +3,20 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ExperienceTicketResource\Pages;
-use App\Models\DestinationTicket;
 use App\Models\ExperienceTicket;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 class ExperienceTicketResource extends Resource
 {
     protected static ?string $model = ExperienceTicket::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationLabel = 'Experience Ticket'; 
+    protected static ?string $navigationLabel = 'Experience Ticket';
 
     public static function form(Form $form): Form
     {
@@ -24,6 +24,16 @@ class ExperienceTicketResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('title')
                     ->required()
+                    ->maxLength(255)
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function ($state, callable $set, $get) {
+                        if (empty($get('slug'))) {
+                            $set('slug', Str::slug($state));
+                        }
+                    }),
+                Forms\Components\TextInput::make('slug')
+                    ->required()
+                    ->unique(ExperienceTicket::class, 'slug', ignoreRecord: true)
                     ->maxLength(255),
                 Forms\Components\TextInput::make('location')
                     ->required()
@@ -58,6 +68,7 @@ class ExperienceTicketResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('image')->square()->size(50),
                 Tables\Columns\TextColumn::make('title')->searchable(),
+                Tables\Columns\TextColumn::make('slug')->searchable(),
                 Tables\Columns\TextColumn::make('location')->searchable(),
                 Tables\Columns\TextColumn::make('price')->money('IDR'),
                 Tables\Columns\IconColumn::make('is_active')->boolean(),
@@ -80,9 +91,9 @@ class ExperienceTicketResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListExperienceTickets::route('/'),
+            'index'  => Pages\ListExperienceTickets::route('/'),
             'create' => Pages\CreateExperienceTicket::route('/create'),
-            'edit' => Pages\EditExperienceTicket::route('/{record}/edit'),
+            'edit'   => Pages\EditExperienceTicket::route('/{record}/edit'),
         ];
     }
 }

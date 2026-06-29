@@ -7,7 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class DestinationTicket extends Model
 {
     protected $fillable = [
-        'title', 'location', 'description', 'price', 'image', 'tags', 'is_active'
+        'title',
+        'slug',
+        'location',
+        'description',
+        'price',
+        'image',
+        'hero_image',
+        'map_embed_url',
+        'map_location_text',
+        'tags',
+        'is_active',
     ];
 
     protected $casts = [
