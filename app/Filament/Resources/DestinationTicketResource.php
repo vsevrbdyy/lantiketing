@@ -14,6 +14,8 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
 use Illuminate\Support\Str;
 
 class DestinationTicketResource extends Resource
@@ -27,52 +29,86 @@ class DestinationTicketResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('title')
-                ->required()
-                ->reactive()
-                ->afterStateUpdated(function ($state, callable $set) {
-                    $set('slug', Str::slug($state));
-                }),
+                Section::make()
+                    ->schema([
+                        Grid::make(2)
+                            ->schema([
+                                TextInput::make('title')
+                                    ->required()
+                                    ->reactive()
+                                    ->afterStateUpdated(function ($state, callable $set) {
+                                        $set('slug', Str::slug($state));
+                                    })
+                                    ->label('Title'),
 
-                TextInput::make('slug')
-                ->required()
-                ->unique(ignoreRecord: true),
+                                TextInput::make('slug')
+                                    ->required()
+                                    ->unique(ignoreRecord: true)
+                                    ->label('Slug'),
+                            ]),
 
-                TextInput::make('location')
-                    ->required()
-                    ->maxLength(255)
-                    ->label('Lokasi'),
+                        Grid::make(2)
+                            ->schema([
+                                TextInput::make('location')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->label('Lokasi'),
 
-                Textarea::make('description')
-                    ->required()
-                    ->rows(5)
-                    ->label('Deskripsi'),
+                                TextInput::make('price')
+                                    ->required()
+                                    ->numeric()
+                                    ->prefix('Rp')
+                                    ->label('Harga (contoh: 250000)')
+                                    ->inputMode('decimal')
+                                    ->mutateDehydratedStateUsing(fn ($state) => (int) str_replace(['.', ','], ['', '.'], $state ?? '0')),
+                            ]),
 
-                TextInput::make('price')
-                    ->required()
-                    ->numeric()
-                    ->prefix('Rp')
-                    ->label('Harga (contoh: 250000)')
-                    ->inputMode('decimal')
-                    ->mutateDehydratedStateUsing(fn ($state) => (int) str_replace(['.', ','], ['', '.'], $state ?? '0')),
+                        Textarea::make('description')
+                            ->required()
+                            ->rows(4)
+                            ->label('Deskripsi')
+                            ->columnSpanFull(),
 
-                FileUpload::make('image')
-                    ->directory('tickets')
-                    ->nullable()
-                    ->label('Gambar'),
+                        Grid::make(2)
+                            ->schema([
+                                FileUpload::make('image')
+                                    ->directory('tickets')
+                                    ->nullable()
+                                    ->label('Gambar')
+                                    ->image()
+                                    ->imageResizeTargetWidth(800)
+                                    ->imageResizeTargetHeight(600),
 
-                TagsInput::make('tags')
-                    ->placeholder('Tambahkan tag, tekan Enter')
-                    ->separator(',')
-                    ->nullable()
-                    ->default([])
-                    ->label('Tags')
-                    ->rules(['array']) // 
-                    ->dehydrateStateUsing(fn ($state) => is_array($state) ? $state : []),
+                                TagsInput::make('tags')
+                                    ->placeholder('Tambahkan tag, tekan Enter')
+                                    ->separator(',')
+                                    ->nullable()
+                                    ->default([])
+                                    ->label('Tags')
+                                    ->rules(['array'])
+                                    ->dehydrateStateUsing(fn ($state) => is_array($state) ? $state : []),
+                            ]),
 
-                Toggle::make('is_active')
-                    ->label('Aktif')
-                    ->default(true),
+                        Textarea::make('map_embed_url')
+                            ->label('Google Maps Embed URL')
+                            ->helperText('Masukkan URL embed dari Google Maps (contoh: https://www.google.com/maps/embed?pb=...)')
+                            ->rows(2)
+                            ->columnSpanFull()
+                            ->nullable(),
+
+                        TextInput::make('map_location_text')
+                            ->maxLength(255)
+                            ->label('Lokasi Map (Text)')
+                            ->helperText('Teks lokasi yang akan ditampilkan di bawah map')
+                            ->columnSpanFull()
+                            ->nullable(),
+
+                        Toggle::make('is_active')
+                            ->label('Aktif')
+                            ->default(true)
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(1),
             ]);
     }
 
